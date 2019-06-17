@@ -35,7 +35,7 @@ class Authorizer:
 
   def authorize(self, code):
     codes = pickle.load(self.codes_file('rb'))
-    result = codes.pop(self.email, None) == code
+    result = codes.get(self.email) == code
     pickle.dump(codes, self.codes_file('wb'))
     return result
 

@@ -6,7 +6,7 @@ def day_to_number(s):
   return {'월': 0, '화': 1, '수': 2, '목': 3, '금': 4}[s]
 
 classroom_info = {
-  '424': [
+  '7호관 424호': [
     set(range(time('11:00'), time('12:45'))),
     set(range(time('9:00'), time('10:45'))) |
     set(range(time('11:00'), time('12:45'))) |
@@ -21,7 +21,7 @@ classroom_info = {
     set(range(time('15:00'), time('16:45'))) |
     set(range(time('18:30'), time('21:00')))
   ],
-  '445': [
+  '7호관 445호': [
     set(range(time('10:30'), time('11:45'))) |
     set(range(time('18:00'), time('20:00'))),
     set(range(time('09:00'), time('10:15'))) |
@@ -32,7 +32,7 @@ classroom_info = {
     set(range(time('12:00'), time('13:15'))),
     set(range(time('10:30'), time('12:45')))
   ],
-  '611': [
+  '7호관 611호': [
     set(range(time('11:00'), time('13:00'))) |
     set(range(time('13:00'), time('15:00'))),
     set(range(time('10:30'), time('11:45'))) |

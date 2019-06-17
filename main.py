@@ -13,15 +13,19 @@ def application(environ, start_response):
     'authorize': authorize
   }.get(api_type)
 
+  status_code = '200 OK'
   if action_method:
-    response_body = action_method(d)
+    try:
+      response_body = action_method(d)
+    except:
+      status_code = '400 Bad Request'
   response_body = json.dumps(response_body or {'result': True})
 
   response_headers = [
     ('Content-Type', 'application/json'),
     ('Content-Length', str(len(response_body)))
   ]
-  start_response('200 OK', response_headers)
+  start_response(status_code, response_headers)
   return [bytes(response_body, 'utf-8')]
 
 def send_mail(d):

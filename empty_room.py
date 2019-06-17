@@ -65,5 +65,3 @@ def search(day, start_time, end_time):
     if minutes_count >= 30:
       classroom_numbers.append(classroom_number)
   return classroom_numbers
-
-print(search('월', '10:01', '10:31'))

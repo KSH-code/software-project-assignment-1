@@ -58,10 +58,16 @@ def search(day, start_time, end_time):
   day = day_to_number(day)
   classroom_numbers =[]
   for classroom_number in classroom_info.keys():
-    minutes_count = 0
+    exsistable = False
     for i in range(start_minutes, end_minutes):
-      if i not in classroom_info[classroom_number][day]:
-        minutes_count += 1
-    if minutes_count >= 30:
+      if i in classroom_info[classroom_number][day]:
+        exsistable = True
+        break
+    if not exsistable:
       classroom_numbers.append(classroom_number)
-  return classroom_numbers
+  if len(classroom_numbers) == 0:
+    raise Exception()
+  dic = {}
+  for i in range(len(classroom_numbers)):
+    dic[i] = classroom_numbers[i]
+  return dic

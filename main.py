@@ -8,11 +8,10 @@ from authorizer import Authorizer
 def application(environ, start_response):
   d = parse_qs(environ['QUERY_STRING'])
   api_type = escape(d.get('api_type', [''])[0])
-
   action_method = {
     'send_mail': send_mail,
     'authorize': authorize,
-    'search': search,
+    'search': search
   }.get(api_type)
 
   status_code = '200 OK'
@@ -46,9 +45,7 @@ def search(d):
   start_time = escape(d.get('start_time', [''])[0])
   end_time = escape(d.get('end_time', [''])[0])
   empty_rooms = empty_room.search(day, start_time, end_time)
-  if len(empty_rooms) == 0:
-    raise Exception()
-  return ','.join(empty_rooms)
+  return empty_rooms
 
 httpd = make_server('', 8000, application)
 httpd.serve_forever()

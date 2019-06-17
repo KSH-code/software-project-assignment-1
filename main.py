@@ -36,7 +36,8 @@ def send_mail(d):
 def authorize(d):
   email = escape(d.get('email', [''])[0])
   code = escape(d.get('code', [''])[0])
-  return {'result': Authorizer(email).authorize(code)}
+  if not Authorizer(email).authorize(code):
+    raise Exception()
 
 httpd = make_server('', 8000, application)
 httpd.serve_forever()

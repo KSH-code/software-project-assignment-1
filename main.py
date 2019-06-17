@@ -16,13 +16,13 @@ def application(environ, start_response):
   }.get(api_type)
 
   status_code = '200 OK'
-  response_body = {'result': True}
+  response_body = None
   if action_method:
     try:
       response_body = action_method(d)
     except:
       status_code = '400 Bad Request'
-  response_body = json.dumps(response_body)
+  response_body = json.dumps(response_body or {'result': True})
 
   response_headers = [
     ('Content-Type', 'application/json'),

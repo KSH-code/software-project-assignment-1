@@ -1,6 +1,10 @@
 def time(n):
-    m = n.split(":")
+    m = n.split(':')
     return int(m[0]) * 60 + int(m[1])
+
+def day_to_number(s):
+  return {'월': 0, '화': 1, '수': 2, '목': 3, '금': 4}[s]
+
 classroom_info = {
   '424': [
     set(range(time('11:00'), time('12:45'))),
@@ -47,3 +51,19 @@ classroom_info = {
     set(range(time('13:00'), time('14:00')))
   ]
 }
+
+def search(day, start_time, end_time):
+  start_minutes = time(start_time)
+  end_minutes = time(end_time)
+  day = day_to_number(day)
+  classroom_numbers =[]
+  for classroom_number in classroom_info.keys():
+    minutes_count = 0
+    for i in range(start_minutes, end_minutes):
+      if i not in classroom_info[classroom_number][day]:
+        minutes_count += 1
+    if minutes_count >= 30:
+      classroom_numbers.append(classroom_number)
+  return classroom_numbers
+
+print(search('월', '10:01', '10:31'))

@@ -1,6 +1,7 @@
 from wsgiref.simple_server import make_server
 from urllib.parse import parse_qs
 from html import escape
+import empty_room
 import json
 from authorizer import Authorizer
 
@@ -10,7 +11,8 @@ def application(environ, start_response):
 
   action_method = {
     'send_mail': send_mail,
-    'authorize': authorize
+    'authorize': authorize,
+    'search': search,
   }.get(api_type)
 
   status_code = '200 OK'
@@ -38,6 +40,15 @@ def authorize(d):
   code = escape(d.get('code', [''])[0])
   if not Authorizer(email).authorize(code):
     raise Exception()
+
+def search(d):
+  day = escape(d.get('d', [''])[0])
+  start_time = escape(d.get('start_time', [''])[0])
+  end_time = escape(d.get('end_time', [''])[0])
+  empty_rooms = empty_room.search(day, start_time, end_time)
+  if len(empty_rooms) == 0:
+    raise Exception()
+  return ','.join(empty_rooms)
 
 httpd = make_server('', 8000, application)
 httpd.serve_forever()
